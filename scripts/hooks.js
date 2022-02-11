@@ -2,6 +2,7 @@
 
 const spawn = require('cross-spawn')
 const path = require('path')
+import { ownPath } from '../config/paths'
 const fs = require('fs')
 const os = require('os')
 process.on('unhandledRejection', (e) => {
@@ -9,10 +10,10 @@ process.on('unhandledRejection', (e) => {
 })
 
 const huskyPath = path.join(process.cwd(), '.husky')
-const husky = require.resolve('../node_modules/.bin/husky')
-const runP = require.resolve('../node_modules/.bin/run-p')
-const commitlint = require.resolve('../node_modules/.bin/commitlint')
-const commitlintConfig = require.resolve('../config/commitlint.config.js')
+const husky = require.resolve('node_modules/.bin/husky')
+const runP = require.resolve('node_modules/.bin/run-p')
+const commitlint = require.resolve('node_modules/.bin/commitlint')
+const commitlintConfig = require.resolve(path.join(ownPath, 'config/commitlint.config.js'))
 
 const installHusky = spawn.sync(`${husky} install ${huskyPath}`, { stdio: 'inherit', shell: true })
 
