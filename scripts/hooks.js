@@ -2,7 +2,7 @@
 
 const spawn = require('cross-spawn')
 const path = require('path')
-const { ownPath } = requre('../config/paths')
+const { ownPath } = require('../config/paths')
 const fs = require('fs')
 const os = require('os')
 process.on('unhandledRejection', (e) => {
