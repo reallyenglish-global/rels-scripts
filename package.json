@@ -13,7 +13,8 @@
   },
   "files": [
     "bin",
-    "scripts"
+    "scripts",
+    "config"
   ],
   "author": "randym",
   "license": "ISC",
