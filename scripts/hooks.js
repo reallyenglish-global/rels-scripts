@@ -12,7 +12,7 @@ process.on('unhandledRejection', (e) => {
 const huskyPath = path.join(process.cwd(), '.husky')
 const commitlintConfig = require.resolve(path.join(ownPath, 'config/commitlint.config.js'))
 
-const installHusky = spawn.sync(`npm exec husky install ${huskyPath}`, {
+const installHusky = spawn.sync(`npm exec -- husky install ${huskyPath}`, {
   stdio: 'inherit',
   shell: true,
 })
@@ -27,8 +27,8 @@ if (installHusky.status !== 0) {
 }
 
 const hooks = {
-  'pre-commit': [`npm exec export CI=true`, `run-p test lint format`],
-  'commit-msg': [`npm exec commitlint --config ${commitlintConfig} --edit $1`],
+  'pre-commit': [`export CI=true`, `npm exec -- run-p test lint format`],
+  'commit-msg': [`npm exec -- commitlint --config ${commitlintConfig} --edit $1`],
 }
 
 Object.keys(hooks).forEach((hookName) => {

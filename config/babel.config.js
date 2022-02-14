@@ -1,5 +1,5 @@
 const config = {
-  ignore: [],
+  ignore: ['node_modules'],
   plugins: [
     [
       '@babel/transform-runtime',
