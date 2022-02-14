@@ -7,7 +7,7 @@ fs.existsSync('testSetup.js') && file.push('testSetup.js')
 
 const recursive = true
 const colors = true
-const requires = require.resolve('./babel.config.js'),
+const requires = require.resolve('./babel.config.js')
 const spec = ['src/**/*.test.js']
 
 const config = {
