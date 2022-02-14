@@ -1,7 +1,8 @@
 const config = {
+  ignore: [],
   plugins: [
     [
-      require.resolve('@babel/plugin-transform-runtime'),
+      '@babel/transform-runtime',
       {
         absoluteRuntime: true,
         corejs: { version: 3, proposals: true },
@@ -27,6 +28,8 @@ const config = {
   ],
 }
 
-// const cache = process.env.CI !== true
-
-module.exports = config
+const cache = process.env.CI !== true
+require('@babel/register', '@babel/runtime')({
+  ...config,
+  cache,
+})

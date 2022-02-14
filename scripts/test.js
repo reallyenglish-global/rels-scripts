@@ -13,7 +13,7 @@ process.on('unhandledRejection', (e) => {
 
 const args = process.argv.slice(2)
 
-const babelConfig = require.resolve('../config/babelConfig')
+const babelConfig = require.resolve('../config/babel.config.js')
 const ownTestSetup = require.resolve('../config/testSetup.js')
 const testSetup = path.join(process.cwd(), 'testSetup.js')
 process.env.CI || args.push('--watch')
@@ -27,11 +27,11 @@ args.push(ownTestSetup)
 
 fs.existsSync(testSetup) && args.push(testSetup)
 
-const globs = ['**/*.test.js', '**/*.spec.js']
+const globs = ['src/**/*.test.js', 'src/**/*.spec.js']
 
 args.push(globs.join(' '))
 
-args.unshift('npm exec -- mocha')
+args.unshift('mocha')
 console.log(args.join(' '))
 const childProcess = spawn.sync(args.join(' '), {
   stdio: 'inherit',
