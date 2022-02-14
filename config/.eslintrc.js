@@ -1,8 +1,6 @@
-const path = require('path')
-const { ownNodeModules } = require('./paths')
 module.exports = {
   root: true,
-  parser: require.resolve(path.join(ownNodeModules, '@babel/eslint-parser')),
+  parser: require.resolve('@babel/eslint-parser'),
   env: {
     browser: true,
     es6: true,

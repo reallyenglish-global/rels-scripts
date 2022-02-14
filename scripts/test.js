@@ -16,7 +16,6 @@ const args = process.argv.slice(2)
 const babelConfig = require.resolve('../config/babelConfig')
 const ownTestSetup = require.resolve('../config/testSetup.js')
 const testSetup = path.join(process.cwd(), 'testSetup.js')
-const mocha = require.resolve('../node_modules/.bin/mocha')
 process.env.CI || args.push('--watch')
 args.push('--recursive')
 
@@ -32,7 +31,7 @@ const globs = ['**/*.test.js', '**/*.spec.js']
 
 args.push(globs.join(' '))
 
-args.unshift(mocha)
+args.unshift('npm exec -- mocha')
 console.log(args.join(' '))
 const childProcess = spawn.sync(args.join(' '), {
   stdio: 'inherit',

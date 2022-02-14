@@ -9,8 +9,8 @@ const settingsPath = path.join(settingsDir, 'settings.json')
 
 const prettierConfig = require.resolve('../config/.prettierrc.yml')
 const prettierIgnore = require.resolve('../config/.prettierignore')
-const prettier = require.resolve('../node_modules/prettier')
-const eslintConfig = require.resolve('../config/.eslintrc.json')
+const prettier = require.resolve('prettier')
+const eslintConfig = require.resolve('../config/.eslintrc.js')
 
 const config = {
   'prettier.configPath': prettierConfig,

@@ -8,7 +8,6 @@ process.on('unhandledRejection', (e) => {
   throw e
 })
 
-const prettier = require.resolve('../node_modules/.bin/prettier')
 const config = require.resolve('../config/.prettierrc.yml')
 const ignore = require.resolve('../config/.prettierignore')
 
@@ -18,7 +17,7 @@ args.push(`--ignore-path ${ignore}`)
 args.push('-w lib/**/*{.js*,.scss}')
 args.push('--no-error-on-unmatched-pattern')
 
-args.unshift(prettier)
+args.unshift('npm exec -- prettier')
 
 const childProcess = spawn.sync(args.join(' '), {
   stdio: 'inherit',
