@@ -1,9 +1,25 @@
-const args = process.argv.slice(2)
+const fs = require('fs')
+const os = require('os')
+const path = require('path')
 
-if (args.includes('--no-hooks') === false) {
-  require('./hooks')
-}
+require('./hooks')
+require('./vscode')
 
-if (args.includes('--no-vscode') === false) {
-  require('./vscode')
-}
+const { defaultBrowsers } = require('react-dev-utils/browsersHelper')
+const { appPath } = require('../config/paths')
+const appPackage = require(path.join(appPath, 'package.json'))
+
+appPackage.scripts = Object.assign(
+  {
+    test: 'rels-scripts test',
+    format: 'rels-scripts format',
+    lint: 'rels-scripts lint',
+    prepare: 'rels-scripts init',
+    start: 'rels-scripts start',
+  },
+  appPackage.scripts || {},
+)
+
+appPackage.browswerslist = defaultBrowsers
+
+fs.writeFileSync(path.join(appPath, 'package.json'), JSON.stringify(appPackage, null, 2) + os.EOL)

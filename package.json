@@ -11,6 +11,10 @@
   "bin": {
     "rels-scripts": "./bin/rels-scripts.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/reallyenglish-global/rels-scripts"
+  },
   "files": [
     "bin",
     "scripts",
