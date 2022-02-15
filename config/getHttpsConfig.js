@@ -40,8 +40,8 @@ function readEnvFile(file, type) {
 // Get the https config
 // Return cert files if provided in env, otherwise just true or false
 function getHttpsConfig() {
-  const { SSL_CRT_FILE, SSL_KEY_FILE, HTTPS } = process.env
-  const isHttps = HTTPS === 'true'
+  const { SSL_CRT_FILE, SSL_KEY_FILE, HTTP } = process.env
+  const isHttps = HTTP !== 'true'
 
   if (isHttps && SSL_CRT_FILE && SSL_KEY_FILE) {
     const crtFile = path.resolve(appPath, SSL_CRT_FILE)
