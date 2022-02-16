@@ -22,4 +22,15 @@ appPackage.scripts = Object.assign(
 
 appPackage.browswerslist = defaultBrowsers
 
+appPackage.release = Object.assign(
+  {
+    plugins: [
+      '@semantic-release/commit-analyzer',
+      '@semantic-release/release-notes-generator',
+      '@semantic-release/github',
+    ],
+  },
+  appPackage.release,
+)
+
 fs.writeFileSync(path.join(appPath, 'package.json'), JSON.stringify(appPackage, null, 2) + os.EOL)
