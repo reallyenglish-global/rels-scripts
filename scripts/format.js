@@ -14,7 +14,7 @@ const ignore = require.resolve('../config/.prettierignore')
 const args = process.argv.slice(2)
 args.push(`--config ${config}`)
 args.push(`--ignore-path ${ignore}`)
-args.push('-w lib/**/*{.js*,.scss}')
+args.push('-w src/**/*{.js*,.scss}')
 args.push('--no-error-on-unmatched-pattern')
 
 args.unshift('npm exec --yes -- prettier')
