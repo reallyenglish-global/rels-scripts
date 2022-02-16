@@ -20,7 +20,7 @@ appPackage.scripts = Object.assign(
   appPackage.scripts || {},
 )
 
-appPackage.browswerslist = defaultBrowsers
+appPackage.browserslist = defaultBrowsers
 
 appPackage.release = Object.assign(
   {
