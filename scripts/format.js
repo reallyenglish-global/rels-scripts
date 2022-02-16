@@ -17,7 +17,7 @@ args.push(`--ignore-path ${ignore}`)
 args.push('-w lib/**/*{.js*,.scss}')
 args.push('--no-error-on-unmatched-pattern')
 
-args.unshift('npm exec -- prettier')
+args.unshift('npm exec --yes -- prettier')
 
 const childProcess = spawn.sync(args.join(' '), {
   stdio: 'inherit',

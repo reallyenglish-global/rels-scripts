@@ -15,7 +15,7 @@ const config = require.resolve('../config/.mocharc.js')
 process.env.CI || args.push('--watch')
 args.push(`--config ${config}`)
 
-args.unshift('npm exec -- mocha')
+args.unshift('npm exec --yes -- mocha')
 
 const childProcess = spawn.sync(args.join(' '), {
   stdio: 'inherit',
