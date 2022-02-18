@@ -1,5 +1,5 @@
 const config = {
-  ignore: ['node_modules'],
+  ignore: [/node_modules\/(?!media-recorder|rels-i18n|rels-assets)/],
   plugins: [
     [
       '@babel/transform-runtime',
@@ -8,6 +8,8 @@ const config = {
         corejs: { version: 3, proposals: true },
       },
     ],
+    'handlebars-inline-precompile',
+    '@babel/plugin-proposal-class-properties',
   ],
   presets: [
     [
