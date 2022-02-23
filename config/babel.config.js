@@ -3,10 +3,8 @@ const config = {
   plugins: [
     [
       '@babel/transform-runtime',
-      {
-        absoluteRuntime: true,
-        corejs: { version: 3, proposals: true },
-      },
+      //{ absoluteRuntime: true, corejs: { version: 3, proposals: true }, }, -> this will break sinon fakeTimers
+      // https://stackoverflow.com/questions/61020746/configure-babel-runtime-corejs3-to-exclude-es-date-now
     ],
     'handlebars-inline-precompile',
     '@babel/plugin-proposal-class-properties',

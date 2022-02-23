@@ -13,14 +13,7 @@ jsdom('', {
   resources: 'usable',
 })
 
-if (typeof global !== 'undefined') {
-  global.Audio = window.Audio
-  global.requestAnimationFrame = window.requestAnimationFrame
-  global.expect = chai.expect
-  global.sinon = sinon
-}
-
-if (typeof window !== 'undefined') {
-  window.expect = chai.expect
-  window.sinon = sinon
-}
+global.Audio = window.Audio
+global.requestAnimationFrame = window.requestAnimationFrame
+global.expect = chai.expect
+global.sinon = sinon
