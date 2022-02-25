@@ -9,6 +9,11 @@ const config = {
     'handlebars-inline-precompile',
     '@babel/plugin-proposal-class-properties',
   ],
+  env: {
+    development: {
+      compact: false,
+    },
+  },
   presets: [
     [
       '@babel/preset-env',
