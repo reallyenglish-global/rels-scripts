@@ -3,7 +3,6 @@
 const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
-const Handlebars = require('handlebars')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
@@ -283,6 +282,7 @@ module.exports = function (webpackEnv) {
           test: /\.(js|mjs|jsx|ts|tsx|css)$/,
           loader: require.resolve('source-map-loader'),
         },
+        { test: /\.hbs$/, loader: 'handlebars-loader' },
         {
           // "oneOf" will traverse all following loaders until one will
           // match the requirements. When no loader matches it will fall
