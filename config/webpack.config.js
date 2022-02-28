@@ -3,7 +3,7 @@
 const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
-
+const Handlebars = require('handlebars')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
