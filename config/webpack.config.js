@@ -475,7 +475,28 @@ module.exports = function (webpackEnv) {
                 'sass-loader',
               ),
             },
-            { test: /\.hbs$/, loader: 'handlebars-loader' },
+            {
+              test: /\.hbs$/i,
+              loader: 'html-loader',
+              options: {
+                preprocessor: (content, loaderContext) => {
+                  let result
+
+                  try {
+                    result = Handlebars.compile(content)({
+                      firstname: 'Value',
+                      lastname: 'OtherValue',
+                    })
+                  } catch (error) {
+                    loaderContext.emitError(error)
+
+                    return content
+                  }
+
+                  return result
+                },
+              },
+            },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.
