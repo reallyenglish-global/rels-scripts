@@ -36,6 +36,7 @@
     "address": "^1.1.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-handlebars-inline-precompile": "^2.1.1",
+    "babel-plugin-transform-scss": "^1.1.0",
     "babel-preset-react-app": "^10.0.1",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "chai": "^4.3.4",

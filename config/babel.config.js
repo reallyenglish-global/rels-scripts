@@ -1,5 +1,5 @@
 const config = {
-  ignore: [/node_modules\/(?!media-recorder|rels-i18n|rels-assets)/],
+  ignore: [/node_modules\/(?!media-recorder|rels-i18n|rels-assets|rels-lib|rels-analytics)/],
   plugins: [
     [
       '@babel/transform-runtime',
@@ -31,6 +31,10 @@ const config = {
       },
     ],
   ],
+}
+
+if (process.env.NODE_ENV !== 'production') {
+  config.plugins.push('transform-scss')
 }
 
 const cache = process.env.CI !== true
