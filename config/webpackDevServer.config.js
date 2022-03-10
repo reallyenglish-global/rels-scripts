@@ -45,9 +45,6 @@ const sources = [
 if (fs.existsSync('node_modules/rels-assets')) {
   sources.push({ directory: './node_modules/rels-assets/assets' })
 }
-if (fs.existsSync('node_modules/media-recorder/public/worker.js')) {
-  sources.push({ file: './node_modules/media-recorder/public/worker.js' })
-}
 
 module.exports = function (proxy, allowedHost) {
   const disableFirewall = !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true'
