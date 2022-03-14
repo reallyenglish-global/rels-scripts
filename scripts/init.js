@@ -16,6 +16,7 @@ appPackage.scripts = Object.assign(
     lint: 'rels-scripts lint',
     prepare: 'rels-scripts init',
     start: 'rels-scripts start',
+    build: 'rels-scripts build',
   },
   appPackage.scripts || {},
 )

@@ -21,7 +21,6 @@ module.exports = {
       'error',
       { ImportDeclaration: { multiline: true, minProperties: 10 }, ObjectPattern: 'never' },
     ],
-    'operator-linebreak': ['error', 'after'],
     'semi-style': ['error', 'first'],
   },
   parserOptions: {
