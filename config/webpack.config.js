@@ -8,11 +8,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')
-const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHTMLPlugin')
+const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin')
 // const { resolveApp, resolveModule } = require('../util/RelativeResolvers')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
-const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHTMLPlugin')
+const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
