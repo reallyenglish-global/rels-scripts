@@ -21,7 +21,6 @@ process.on('unhandledRejection', (err) => {
 
 // Ensure environment variables are read.
 require('../config/env')
-
 const path = require('path')
 const chalk = require('react-dev-utils/chalk')
 const fs = require('fs-extra')
@@ -53,14 +52,15 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 const argv = process.argv.slice(2)
 const writeStatsJson = argv.indexOf('--stats') !== -1
 
-// Generate configuration
-const config = configFactory('production')
+// Generate configuration after we load up semantic versioning
+let config
 
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
 const { checkBrowsers } = require('react-dev-utils/browsersHelper')
 versioning()
   .then(() => {
+    config = configFactory('production')
     checkBrowsers(paths.appPath, isInteractive)
       .then(() => {
         // First, read the current file sizes in build directory.

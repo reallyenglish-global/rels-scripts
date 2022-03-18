@@ -24,17 +24,21 @@ const getBranchName = () => {
 
 const branch = getBranchName()
 
-module.exports = semanticRelease({
-  branch: branch,
-  tagFormat: 'v${version}', // eslint-disable-line no-template-curly-in-string
-  plugins: ['@semantic-release/commit-analyzer'],
-  dryRun: true,
-}).then((result) => {
-  const appName = require(paths.appPackageJson).name
-  const appEnvKey = appName.replace(/-/g, '_').toUpperCase()
-  const { gitTag, gitHead } = result.nextRelease
-  Object.assign(process.env, {
-    [`${appEnvKey}_VERSION`]: `${gitTag}-${branch}`,
-    [`${appEnvKey}_REVISION`]: `${gitHead}-${branch}`,
+module.exports = () => {
+  return semanticRelease({
+    branches: [branch],
+    tagFormat: 'v${version}', // eslint-disable-line no-template-curly-in-string
+    plugins: ['@semantic-release/commit-analyzer'],
+    dryRun: true,
+    cwd: process.cwd(),
+  }).then((result) => {
+    const appName = require(paths.appPackageJson).name
+    const appEnvKey = appName.replace(/-/g, '_').toUpperCase()
+    const { gitTag, gitHead } = result.nextRelease
+    Object.assign(process.env, {
+      [`${appEnvKey}_VERSION`]: `${gitTag}-${branch}`,
+      [`${appEnvKey}_REVISION`]: `${gitHead}-${branch}`,
+      [`${appEnvKey}_BRANCH`]: branch,
+    })
   })
-})
+}
