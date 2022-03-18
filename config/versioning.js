@@ -23,15 +23,16 @@ const getBranchName = () => {
 }
 
 const branch = getBranchName()
-
+const config = {
+  branches: [branch],
+  tagFormat: 'v${version}', // eslint-disable-line no-template-curly-in-string
+  plugins: ['@semantic-release/commit-analyzer'],
+  dryRun: true,
+  cwd: process.cwd(),
+}
+console.log(config)
 module.exports = () => {
-  return semanticRelease({
-    branches: [branch],
-    tagFormat: 'v${version}', // eslint-disable-line no-template-curly-in-string
-    plugins: ['@semantic-release/commit-analyzer'],
-    dryRun: true,
-    cwd: process.cwd(),
-  }).then((result) => {
+  return semanticRelease(config).then((result) => {
     const appName = require(paths.appPackageJson).name
     const appEnvKey = appName.replace(/-/g, '_').toUpperCase()
     const { gitTag, gitHead } = result.nextRelease
