@@ -22,7 +22,8 @@ const getBranchName = () => {
   return gitBranch.stdout.trim()
 }
 
-const branch = getBranchName()
+const branch = process.env.TRAVIS_BRANCH || getBranchName()
+
 const config = {
   branches: [branch],
   tagFormat: 'v${version}', // eslint-disable-line no-template-curly-in-string
