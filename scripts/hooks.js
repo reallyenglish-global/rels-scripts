@@ -1,10 +1,11 @@
+#!/usr/bin/env node
 'use strict'
 
 const spawn = require('cross-spawn')
 const path = require('path')
 const { ownPath } = require('../config/paths')
 const fs = require('fs')
-const os = require('os')
+
 process.on('unhandledRejection', (e) => {
   throw e
 })

@@ -11,7 +11,7 @@ const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 const clearConsole = require('react-dev-utils/clearConsole')
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles')
-const semver = require('semver')
+/* eslint-disable object-curly-newline */
 const {
   choosePort,
   createCompiler,
