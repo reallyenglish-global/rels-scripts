@@ -97,6 +97,13 @@
     "webpack-manifest-plugin": "^4.1.1",
     "workbox-webpack-plugin": "^6.4.2"
   },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/github"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
