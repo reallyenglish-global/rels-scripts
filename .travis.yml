@@ -1,0 +1,10 @@
+language: node_js
+dist: xenial
+node_js: node
+cache:
+  npm: false
+script: npm exec -- run-p lint format test
+after_success:
+  - npm exec -- semantic-release
+notifications:
+  email: false
