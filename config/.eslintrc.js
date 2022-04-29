@@ -31,7 +31,7 @@ module.exports = {
     {
       files: ['./**/*.test.js', './**/*.spec.js'],
       env: { mocha: true },
-      plugins: ['mocha'],
+      plugins: ['eslint-plugin-mocha'],
       rules: {
         'mocha/no-mocha-arrows': 0,
       },
