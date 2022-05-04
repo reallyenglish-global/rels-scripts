@@ -25,7 +25,9 @@ module.exports = {
   },
   parserOptions: {
     sourceType: 'module',
-    requireConfigFile: false,
+    babelOptions: {
+      configFile: require.resolve('./babel.config.js'),
+    },
   },
   overrides: [
     {
