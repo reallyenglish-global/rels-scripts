@@ -1,3 +1,5 @@
+process.env.BABEL_ENV ||= 'development'
+
 module.exports = {
   root: true,
   parser: require.resolve('@babel/eslint-parser'),
