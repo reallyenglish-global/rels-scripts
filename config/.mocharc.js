@@ -9,6 +9,7 @@ const recursive = true
 const colors = true
 const requires = require.resolve('./babel.config.js')
 const spec = ['src/**/*.test.js']
+const timeout = 5000
 
 const config = {
   recursive,
@@ -16,6 +17,7 @@ const config = {
   require: requires,
   file,
   spec,
+  timeout,
 }
 
 module.exports = config
