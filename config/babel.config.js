@@ -3,6 +3,7 @@
 */
 const config = {
   ignore: [/node_modules\/(?!media-recorder|rels-i18n|rels-assets|rels-lib|rels-analytics)/],
+  sourceType: "unambiguous",
   presets: [
     [
       require.resolve('babel-preset-react-app'),
@@ -14,7 +15,8 @@ const config = {
       require.resolve('@babel/preset-env'),
       {
         useBuiltIns: "usage",
-        corejs: 3
+        loose: true,
+        corejs: 3,
       },
     ],
   ],
@@ -31,3 +33,4 @@ require('@babel/register', '@babel/runtime')({
 })
 
 module.exports = config
+
