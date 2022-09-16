@@ -10,6 +10,13 @@ const config = {
         runtime: 'classic',
       },
     ],
+    [
+      require.resolve('@babel/preset-env'),
+      {
+        useBuiltIns: "usage",
+        corejs: 3
+      },
+    ],
   ],
 }
 // ensure scss and hbs tranforms are done when running mocha
