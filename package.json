@@ -1,6 +1,6 @@
 {
   "name": "rels-scripts",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "tool chain scripts for rels-xxx development",
   "main": "index.js",
   "scripts": {
