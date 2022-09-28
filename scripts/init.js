@@ -5,7 +5,6 @@ const path = require('path')
 require('./hooks')
 require('./vscode')
 
-const { defaultBrowsers } = require('react-dev-utils/browsersHelper')
 const { appPath } = require('../config/paths')
 const appPackage = require(path.join(appPath, 'package.json'))
 
@@ -20,8 +19,6 @@ appPackage.scripts = Object.assign(
   },
   appPackage.scripts || {},
 )
-
-appPackage.browserslist = defaultBrowsers
 
 appPackage.release = Object.assign(
   {
