@@ -97,23 +97,12 @@
     "webpack-manifest-plugin": "^4.1.1",
     "workbox-webpack-plugin": "^6.4.2"
   },
+  "browserslist": "Safari >= 13, Chrome >= 93, Edge >= 88, Firefox >= 90, ios >= 13, and_chr >= 105",
   "release": {
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
       "@semantic-release/github"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
     ]
   }
 }
