@@ -367,7 +367,7 @@ module.exports = function (webpackEnv) {
             },
             // Process any JS outside of the app with Babel.
             {
-              test: /\.(js|mjs)$/,
+              test: /\.(js|mjs|cjs)$/,
               exclude: /@babel(?:\/|\\{1,2})runtime/,
               loader: require.resolve('babel-loader'),
               options: {
