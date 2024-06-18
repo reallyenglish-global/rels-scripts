@@ -34,6 +34,10 @@ const config = {
 console.log(config)
 module.exports = () => {
   return semanticRelease(config).then((result) => {
+    if (result == undefined) {
+      console.log('fail to get a release version', config)
+      return
+    }
     const appName = require(paths.appPackageJson).name
     const appEnvKey = appName.replace(/-/g, '_').toUpperCase()
     const { gitTag, gitHead } = result.nextRelease
