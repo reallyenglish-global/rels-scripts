@@ -34,8 +34,8 @@ const config = {
 console.log(config)
 module.exports = () => {
   return semanticRelease(config).then((result) => {
-    if (result == undefined) {
-      console.log('fail to get a release version', config)
+    if (result.nextRelease == undefined) {
+      console.log('fail to get a release version', config, result)
       return
     }
     const appName = require(paths.appPackageJson).name
