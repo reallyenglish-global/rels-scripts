@@ -31,7 +31,6 @@ const config = {
   dryRun: true,
   cwd: process.cwd(),
 }
-console.log(config)
 module.exports = () => {
   return semanticRelease(config).then((result) => {
     if (result.nextRelease == undefined) {
@@ -40,7 +39,7 @@ module.exports = () => {
     }
     const appName = require(paths.appPackageJson).name
     const appEnvKey = appName.replace(/-/g, '_').toUpperCase()
-    const { gitTag, gitHead } = result.nextRelease
+    const { gitTag='unreleased', gitHead='unknown' } = result.nextRelease ?? {}
     Object.assign(process.env, {
       [`${appEnvKey}_VERSION`]: `${gitTag}-${branch}`,
       [`${appEnvKey}_REVISION`]: `${gitHead}-${branch}`,
