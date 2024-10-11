@@ -70,7 +70,7 @@ const cssRegex = /\.css$/
 const cssModuleRegex = /\.module\.css$/
 const sassRegex = /\.(scss|sass)$/
 const sassModuleRegex = /\.module\.(scss|sass)$/
-const sassOptions = process.env.SASS_OPTIONS && { sassOptions: JSON.parse(process.env.SASS_OPTIONS) } || {}
+const sassOptions = process.env.SASS_OPTIONS && JSON.parse(process.env.SASS_OPTIONS) || {}
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
