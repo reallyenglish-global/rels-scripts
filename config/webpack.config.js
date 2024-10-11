@@ -147,6 +147,7 @@ module.exports = function (webpackEnv) {
           loader: require.resolve(preProcessor),
           options: {
             sourceMap: true,
+            ...(preProcessor == 'sass-loader' ? sassOptions : {}),
           },
         },
       )
@@ -440,7 +441,6 @@ module.exports = function (webpackEnv) {
                   modules: {
                     mode: 'icss',
                   },
-                  ...sassOptions,
                 },
                 'sass-loader',
               ),
