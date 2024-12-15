@@ -20,4 +20,14 @@ const config = {
   timeout,
 }
 
+// Allow overriding spec with a specific file or pattern
+if (process.env.TEST_FILE) {
+  config.spec = [process.env.TEST_FILE]
+}
+
+// Allow specifying a specific test using grep
+if (process.env.TEST_GREP) {
+  config.grep = process.env.TEST_GREP
+}
+
 module.exports = config
