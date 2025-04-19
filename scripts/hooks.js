@@ -6,6 +6,11 @@ const path = require('path')
 const { ownPath } = require('../config/paths')
 const fs = require('fs')
 
+if (!fs.existsSync('.git')) {
+  console.log('skip hooks because .git does not exist')
+  return
+}
+
 process.on('unhandledRejection', (e) => {
   throw e
 })
