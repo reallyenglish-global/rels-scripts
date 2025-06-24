@@ -18,10 +18,36 @@ process.on('unhandledRejection', (e) => {
 const huskyPath = path.join(process.cwd(), '.husky')
 const commitlintConfig = require.resolve(path.join(ownPath, 'config/commitlint.config.js'))
 
-const installHusky = spawn.sync(`npm exec --yes -- husky install ${huskyPath}`, {
-  stdio: 'inherit',
-  shell: true,
-})
+// Detect package manager
+function getPackageManager() {
+  if (fs.existsSync(path.join(process.cwd(), 'pnpm-lock.yaml'))) return 'pnpm'
+  if (fs.existsSync(path.join(process.cwd(), 'yarn.lock'))) return 'yarn'
+  return 'npm'
+}
+
+const pkgManager = getPackageManager()
+const execCmd =
+  pkgManager === 'yarn'
+    ? 'yarn'
+    : pkgManager === 'pnpm'
+    ? 'pnpm'
+    : 'npm'
+
+const execArgs =
+  pkgManager === 'yarn'
+    ? ['exec']
+    : ['exec', '--yes', '--']
+
+const huskyInstallCmd =
+  pkgManager === 'yarn'
+    ? ['husky', 'install', huskyPath]
+    : ['husky', 'install', huskyPath]
+
+const installHusky = spawn.sync(
+  execCmd,
+  [...execArgs, ...huskyInstallCmd],
+  { stdio: 'inherit', shell: true }
+)
 
 if (installHusky.signal) {
   console.log('computer says no')
@@ -33,8 +59,13 @@ if (installHusky.status !== 0) {
 }
 
 const hooks = {
-  'pre-commit': [`export CI=true`, `npm exec --yes -- run-p test lint format`],
-  'commit-msg': [`npm exec --yes -- commitlint --config ${commitlintConfig} --edit $1`],
+  'pre-commit': [
+    'export CI=true',
+    `${execCmd} ${execArgs.join(' ')} run-p test lint format`
+  ],
+  'commit-msg': [
+    `${execCmd} ${execArgs.join(' ')} commitlint --config ${commitlintConfig} --edit $1`
+  ],
 }
 
 Object.keys(hooks).forEach((hookName) => {
@@ -52,7 +83,7 @@ Object.keys(hooks).forEach((hookName) => {
       }
     }
 
-    const command = `npm exec husky add ${hookFile} '${action}'`
+    const command = `${execCmd} ${execArgs.join(' ')} husky add ${hookFile} '${action}'`
     const childProcess = spawn.sync(command, { stdio: 'inherit', shell: true })
 
     if (childProcess.signal) {
