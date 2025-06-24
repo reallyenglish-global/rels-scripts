@@ -26,22 +26,11 @@ function getPackageManager() {
 }
 
 const pkgManager = getPackageManager()
-const execCmd =
-  pkgManager === 'yarn'
-    ? 'yarn'
-    : pkgManager === 'pnpm'
-    ? 'pnpm'
-    : 'npm'
+const execCmd = pkgManager
 
-const execArgs =
-  pkgManager === 'yarn'
-    ? ['exec']
-    : ['exec', '--yes', '--']
+const execArgs = ['exec']
 
-const huskyInstallCmd =
-  pkgManager === 'yarn'
-    ? ['husky', 'install', huskyPath]
-    : ['husky', 'install', huskyPath]
+const huskyInstallCmd = ['husky', 'install', huskyPath]
 
 const installHusky = spawn.sync(
   execCmd,
