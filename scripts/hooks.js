@@ -8,7 +8,7 @@ const fs = require('fs')
 
 if (!fs.existsSync('.git')) {
   console.log('skip hooks because .git does not exist')
-  return
+  process.exit(0)
 }
 
 process.on('unhandledRejection', (e) => {
@@ -32,11 +32,10 @@ const execArgs = ['exec']
 
 const huskyInstallCmd = ['husky', 'install', huskyPath]
 
-const installHusky = spawn.sync(
-  execCmd,
-  [...execArgs, ...huskyInstallCmd],
-  { stdio: 'inherit', shell: true }
-)
+const installHusky = spawn.sync(execCmd, [...execArgs, ...huskyInstallCmd], {
+  stdio: 'inherit',
+  shell: true,
+})
 
 if (installHusky.signal) {
   console.log('computer says no')
@@ -48,12 +47,9 @@ if (installHusky.status !== 0) {
 }
 
 const hooks = {
-  'pre-commit': [
-    'export CI=true',
-    `${execCmd} ${execArgs.join(' ')} run-p test lint format`
-  ],
+  'pre-commit': ['export CI=true', `${execCmd} ${execArgs.join(' ')} run-p test lint format`],
   'commit-msg': [
-    `${execCmd} ${execArgs.join(' ')} commitlint --config ${commitlintConfig} --edit $1`
+    `${execCmd} ${execArgs.join(' ')} commitlint --config ${commitlintConfig} --edit $1`,
   ],
 }
 

@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
-    "format": "npm exec -- prettier -w --config ./config/.prettierrc.yml ./scripts/**/*.js",
-    "lint": "export BABEL_ENV=test && npm exec -- eslint --config ./config/.eslintrc.js ./scripts/**/*.js"
+    "format": "yarn exec -- prettier -w --config ./config/.prettierrc.yml ./scripts/**/*.js",
+    "lint": "export BABEL_ENV=test && yarn exec -- eslint --config ./config/.eslintrc.js ./scripts/**/*.js",
+    "prepare": "husky install"
   },
   "bin": {
     "rels-scripts": "./bin/rels-scripts.js"
@@ -29,20 +30,19 @@
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.10",
     "@babel/register": "^7.16.9",
-    "@babel/runtime-corejs3": "^7.17.0",
     "@commitlint/cli": "^16.1.0",
     "@commitlint/config-conventional": "^16.0.0",
     "@svgr/webpack": "^6.2.1",
     "address": "^1.1.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-handlebars-inline-precompile": "^2.1.1",
+    "babel-plugin-module-resolver": "^5.0.2",
     "babel-plugin-transform-scss": "^1.1.0",
     "babel-preset-react-app": "^10.0.1",
     "bfj": "^7.0.2",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "chai": "^4.3.4",
     "chalk": "^5.0.0",
-    "core-js": "^3.20.3",
     "cross-spawn": "^7.0.3",
     "css-loader": "^6.6.0",
     "css-minimizer-webpack-plugin": "^3.4.1",
@@ -56,9 +56,6 @@
     "eslint-plugin-mocha": "10.0.3",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-webpack-plugin": "^3.1.1",
-    "exports-loader": "^3.1.0",
-    "expose-loader": "^3.1.0",
-    "file-loader": "^6.2.0",
     "fs-extra": "^10.0.1",
     "handlebars": "^4.7.7",
     "handlebars-loader": "^1.7.1",
