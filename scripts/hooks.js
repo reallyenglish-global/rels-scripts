@@ -8,7 +8,7 @@ const fs = require('fs')
 
 if (!fs.existsSync('.git')) {
   console.log('skip hooks because .git does not exist')
-  return
+  process.exit(0)
 }
 
 process.on('unhandledRejection', (e) => {
