@@ -31,7 +31,17 @@ const config = {
       },
     ],
   ],
-  plugins: [],
+  plugins: [
+    ['module-resolver', {
+      root: ['./src'], // Adjust this to your source code root
+      extensions: ['.js', '.hbs', '.json'], // Add all relevant file extensions
+      alias: {
+        // Add any aliases you might use, e.g.:
+        // '@constants': './src/constants',
+        // '@utils': './src/utils',
+      }
+    }],
+  ],
 }
 
 // Add test-specific plugins
