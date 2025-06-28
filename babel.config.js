@@ -1,32 +1,33 @@
-const config = {
-  plugins: [
-    [
-      require.resolve('@babel/plugin-transform-runtime'),
-      {
-        absoluteRuntime: true,
-        corejs: { version: 3, proposals: true },
-      },
-    ],
-  ],
-  presets: [
-    [
-      '@babel/preset-env',
-      {
-        debug: false,
-        targets: {
-          browsers: [
-            'Explorer 11',
-            'last 1 Chrome versions',
-            'last 1 FireFox versions',
-            'last 1 Safari versions',
-            'last 1 Edge versions',
+module.exports = function (api) {
+  api.cache(true) // Enable caching for faster rebuilds
+
+  return {
+    presets: [
+      [
+        '@babel/preset-env',
+        {
+          useBuiltIns: false, // Set to 'usage' and add corejs if you need polyfills
+          modules: false,
+          targets: [
+            'last 2 Chrome versions',
+            'last 2 Firefox versions',
+            'last 2 Safari versions',
+            'last 2 Edge versions',
+            'not dead',
           ],
         },
-      },
+      ],
+      // Uncomment if you use React:
+      // '@babel/preset-react',
     ],
-  ],
+    plugins: [
+      [
+        '@babel/plugin-transform-runtime',
+        {
+          absoluteRuntime: false,
+          // corejs: 3, // Uncomment if you want runtime polyfills
+        },
+      ],
+    ],
+  }
 }
-
-// const cache = process.env.CI !== true
-
-module.exports = config
