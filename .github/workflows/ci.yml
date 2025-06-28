@@ -19,5 +19,5 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Lint and test
         run: |
-          yarn exec -- run-p lint format test
-          yarn run test
+          yarn lint
+          yarn test
