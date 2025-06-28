@@ -1,10 +1,12 @@
+const useCorejs = process.env.USE_COREJS !== 'false'
+
 const config = {
   plugins: [
     [
       require.resolve('@babel/plugin-transform-runtime'),
       {
         absoluteRuntime: true,
-        corejs: { version: 3, proposals: true },
+        ...(useCorejs && { corejs: { version: 3, proposals: true } }),
       },
     ],
   ],
@@ -22,6 +24,8 @@ const config = {
             'last 1 Edge versions',
           ],
         },
+        useBuiltIns: useCorejs ? 'usage' : false,
+        ...(useCorejs && { corejs: 3 }),
       },
     ],
   ],

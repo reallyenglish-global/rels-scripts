@@ -1,6 +1,15 @@
 /*
- This babel.config is used by webpack as well as mocha and eslint configurations. 
+ This babel.config is used by webpack as well as mocha and eslint configurations.
+ Makes corejs optional: set USE_COREJS=false to disable.
 */
+const useCorejs = process.env.USE_COREJS !== 'false'
+
+const envPreset = {
+  useBuiltIns: useCorejs ? 'usage' : false,
+  loose: true,
+  ...(useCorejs && { corejs: 3 }),
+}
+
 const config = {
   ignore: [/node_modules\/(?!media-recorder|rels-i18n|rels-assets|rels-lib|rels-analytics)/],
   sourceType: "unambiguous",
@@ -13,15 +22,12 @@ const config = {
     ],
     [
       require.resolve('@babel/preset-env'),
-      {
-        useBuiltIns: "usage",
-        loose: true,
-        corejs: 3,
-      },
+      envPreset,
     ],
   ],
 }
-// ensure scss and hbs tranforms are done when running mocha
+
+// ensure scss and hbs transforms are done when running mocha
 if (process.env.NODE_ENV === 'test') {
   config.plugins = ['handlebars-inline-precompile', 'transform-scss']
 }
