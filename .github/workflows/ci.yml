@@ -1,0 +1,23 @@
+name: CI
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x, 24.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - name: Install modules ${{ matrix.node-version }}
+        run: yarn install --frozen-lockfile
+      - name: Lint and test
+        run: |
+          yarn exec -- run-p lint format test
+          yarn run test
