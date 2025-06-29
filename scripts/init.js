@@ -1,3 +1,9 @@
+// skip for CI
+if (process.env.CI === 'true') {
+  console.log('skip init scripts in CI')
+  process.exit(0)
+}
+
 const fs = require('fs')
 const os = require('os')
 const path = require('path')

@@ -32,7 +32,7 @@ const execArgs = ['exec']
 
 const huskyInstallCmd = ['husky', 'install', huskyPath]
 
-console.log('installing husky', pkgManager, execCmd, huskyInstallCmd)
+console.log('installing husky', execCmd, execCmd, huskyInstallCmd)
 const installHusky = spawn.sync(
   execCmd,
   [...execArgs, ...huskyInstallCmd],
@@ -44,7 +44,7 @@ if (installHusky.signal) {
   process.exit(1)
 }
 
-if (installHusky.status !== 0) {
+if (installHusky.status !== 0 && process.env.CI !== 'true') {
   process.exit(installHusky.status)
 }
 
