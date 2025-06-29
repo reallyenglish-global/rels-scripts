@@ -32,6 +32,7 @@ const execArgs = ['exec']
 
 const huskyInstallCmd = ['husky', 'install', huskyPath]
 
+console.log('installing husky', pkgManager, execCmd, huskyInstallCmd)
 const installHusky = spawn.sync(
   execCmd,
   [...execArgs, ...huskyInstallCmd],
