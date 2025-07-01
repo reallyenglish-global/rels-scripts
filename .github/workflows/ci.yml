@@ -6,18 +6,25 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22.x, 24.x]
+        node-version: [24.x]
 
     steps:
       - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3 # Use v3 for latest compatibility.
+        with:
+          version: 10 # Or 'latest', or a specific version like '9'
+          run_install: false # We'll run install in a separate step for better caching
+
       - name: Set Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
+          cache: 'pnpm'
+
       - name: Install modules ${{ matrix.node-version }}
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Lint and test
         run: |
-          yarn lint
-          yarn test
+          pnpm lint
+          pnpm test

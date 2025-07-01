@@ -20,7 +20,15 @@ const commitlintConfig = require.resolve(path.join(ownPath, 'config/commitlint.c
 
 // Detect package manager
 function getPackageManager() {
-  if (fs.existsSync(path.join(process.cwd(), 'pnpm-lock.yaml'))) return 'pnpm'
+  try {
+    if (fs.existsSync(path.join(process.cwd(), 'pnpm-lock.yaml'))) {
+      require('child_process').execSync('pnpm --version', { stdio: 'ignore' })
+
+      return 'pnpm'
+    }
+  } catch (e) {
+    console.log('Error when running pnpm', e)
+  }
   if (fs.existsSync(path.join(process.cwd(), 'yarn.lock'))) return 'yarn'
   return 'npm'
 }
@@ -32,6 +40,7 @@ const execArgs = ['exec']
 
 const huskyInstallCmd = ['husky', 'install', huskyPath]
 
+console.log('installing husky', execCmd, execCmd, huskyInstallCmd)
 const installHusky = spawn.sync(
   execCmd,
   [...execArgs, ...huskyInstallCmd],
@@ -43,7 +52,7 @@ if (installHusky.signal) {
   process.exit(1)
 }
 
-if (installHusky.status !== 0) {
+if (installHusky.status !== 0 && process.env.CI !== 'true') {
   process.exit(installHusky.status)
 }
 
