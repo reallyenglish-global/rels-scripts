@@ -33,13 +33,15 @@ const config = {
 }
 module.exports = () => {
   return semanticRelease(config).then((result) => {
-    if (result.nextRelease == undefined) {
+    const nextRelease = result && result.nextRelease
+    if (!nextRelease) {
       console.log('fail to get a release version', config, result)
       return
     }
     const appName = require(paths.appPackageJson).name
     const appEnvKey = appName.replace(/-/g, '_').toUpperCase()
-    const { gitTag='unreleased', gitHead='unknown' } = result.nextRelease ?? {}
+    const gitTag = nextRelease.gitTag || 'unreleased'
+    const gitHead = nextRelease.gitHead || 'unknown'
     Object.assign(process.env, {
       [`${appEnvKey}_VERSION`]: `${gitTag}-${branch}`,
       [`${appEnvKey}_REVISION`]: `${gitHead}-${branch}`,
