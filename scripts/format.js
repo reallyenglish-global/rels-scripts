@@ -15,7 +15,7 @@ args.push(`--ignore-path ${ignore}`)
 args.push('-w src/**/*{.js*,.scss}')
 args.push('--no-error-on-unmatched-pattern')
 
-args.unshift('npm exec --yes -- prettier')
+args.unshift('corepack pnpm exec prettier')
 
 const childProcess = spawn.sync(args.join(' '), {
   stdio: 'inherit',

@@ -1,12 +1,13 @@
 {
   "name": "rels-scripts",
   "version": "1.0.0",
+  "packageManager": "pnpm@10.29.3",
   "description": "tool chain scripts for rels-xxx development",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
-    "format": "npm exec -- prettier -w --config ./config/.prettierrc.yml ./scripts/**/*.js",
-    "lint": "export BABEL_ENV=test && npm exec -- eslint --config ./config/.eslintrc.js ./scripts/**/*.js"
+    "format": "corepack pnpm exec prettier -w --config ./config/.prettierrc.yml ./scripts/**/*.js",
+    "lint": "export BABEL_ENV=test && corepack pnpm exec eslint --config ./config/.eslintrc.js ./scripts/**/*.js"
   },
   "bin": {
     "rels-scripts": "./bin/rels-scripts.js"

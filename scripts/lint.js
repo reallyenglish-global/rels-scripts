@@ -15,7 +15,7 @@ const args = process.argv.slice(2)
 args.push(`--config ${config}`)
 args.push('--ext .js,.jsx')
 args.push('src/')
-args.unshift('npm exec --yes -- eslint')
+args.unshift('corepack pnpm exec eslint')
 const childProcess = spawn.sync(args.join(' '), {
   stdio: 'inherit',
   shell: true,
