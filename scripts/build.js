@@ -25,7 +25,7 @@ const printBuildError = require('react-dev-utils/printBuildError')
 
 const measureFileSizesBeforeBuild = FileSizeReporter.measureFileSizesBeforeBuild
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild
-const useYarn = fs.existsSync(paths.yarnLockFile)
+const hasYarnLock = fs.existsSync(paths.yarnLockFile)
 
 // These sizes are pretty large. We'll warn for bundles exceeding them.
 const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024
@@ -98,7 +98,7 @@ versioning()
           const publicUrl = paths.publicUrlOrPath
           const publicPath = config.output.publicPath
           const buildFolder = path.relative(process.cwd(), paths.appBuild)
-          printHostingInstructions(appPackage, publicUrl, publicPath, buildFolder, useYarn)
+          printHostingInstructions(appPackage, publicUrl, publicPath, buildFolder, hasYarnLock)
         },
         (err) => {
           const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true'

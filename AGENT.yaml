@@ -1,0 +1,40 @@
+name: rels-scripts
+mission: Provide a shared CLI that standardises lint/test/build tooling across rels-* front-end apps.
+documentation:
+  overview: docs/overview.md
+  maintenance: docs/maintenance.md
+entry_points:
+  cli: bin/rels-scripts.js
+  configs:
+    - config/webpack.config.js
+    - config/.eslintrc.js
+    - config/.prettierrc.yml
+commands:
+  setup:
+    description: Install dependencies and link rels-scripts for local development.
+    steps:
+      - run: pnpm install
+  lint:
+    description: Run eslint with the shared config.
+    steps:
+      - run: pnpm lint
+  format:
+    description: Run prettier on src/**/*.js|jsx|scss.
+    steps:
+      - run: pnpm format
+  test:
+    description: Execute mocha using config/.mocharc.js (watch disabled in CI).
+    steps:
+      - run: pnpm test
+  start:
+    description: Launch webpack-dev-server with HTTPS enabled.
+    steps:
+      - run: pnpm exec rels-scripts start
+  build:
+    description: Produce an optimized build with semantic-release metadata injected.
+    steps:
+      - run: pnpm exec rels-scripts build
+notes:
+  - Always run `pnpm exec rels-scripts init` inside consuming apps to install husky and VS Code settings.
+  - `config/versioning.js` depends on git tags; make sure the repo has commit history available before running `start` or `build`.
+  - Default semantic-release execution is a dry run, so publishing new packages still requires manual version bumping and `pnpm publish`.

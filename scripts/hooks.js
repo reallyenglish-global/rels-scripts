@@ -17,35 +17,22 @@ process.on('unhandledRejection', (e) => {
 
 const huskyPath = path.join(process.cwd(), '.husky')
 const commitlintConfig = require.resolve(path.join(ownPath, 'config/commitlint.config.js'))
+const execCmd = 'corepack'
+const execArgs = ['pnpm', 'exec']
 
-// Detect package manager
-function getPackageManager() {
-  try {
-    if (fs.existsSync(path.join(process.cwd(), 'pnpm-lock.yaml'))) {
-      require('child_process').execSync('pnpm --version', { stdio: 'ignore' })
-
-      return 'pnpm'
-    }
-  } catch (e) {
-    console.log('Error when running pnpm', e)
-  }
-  if (fs.existsSync(path.join(process.cwd(), 'yarn.lock'))) return 'yarn'
-  return 'npm'
+const pnpmCheck = spawn.sync(execCmd, ['pnpm', '--version'], { stdio: 'ignore', shell: true })
+if (pnpmCheck.status !== 0 || pnpmCheck.signal) {
+  console.error('pnpm is required to install hooks. Ensure corepack is available and rerun init.')
+  process.exit(1)
 }
-
-const pkgManager = getPackageManager()
-const execCmd = pkgManager
-
-const execArgs = ['exec']
 
 const huskyInstallCmd = ['husky', 'install', huskyPath]
 
-console.log('installing husky', execCmd, execCmd, huskyInstallCmd)
-const installHusky = spawn.sync(
-  execCmd,
-  [...execArgs, ...huskyInstallCmd],
-  { stdio: 'inherit', shell: true }
-)
+console.log('installing husky', execCmd, huskyInstallCmd)
+const installHusky = spawn.sync(execCmd, [...execArgs, ...huskyInstallCmd], {
+  stdio: 'inherit',
+  shell: true,
+})
 
 if (installHusky.signal) {
   console.log('computer says no')
@@ -57,12 +44,9 @@ if (installHusky.status !== 0 && process.env.CI !== 'true') {
 }
 
 const hooks = {
-  'pre-commit': [
-    'export CI=true',
-    `${execCmd} ${execArgs.join(' ')} run-p test lint format`
-  ],
+  'pre-commit': ['export CI=true', `${execCmd} ${execArgs.join(' ')} run-p test lint format`],
   'commit-msg': [
-    `${execCmd} ${execArgs.join(' ')} commitlint --config ${commitlintConfig} --edit $1`
+    `${execCmd} ${execArgs.join(' ')} commitlint --config ${commitlintConfig} --edit $1`,
   ],
 }
 

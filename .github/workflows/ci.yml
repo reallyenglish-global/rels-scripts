@@ -10,21 +10,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3 # Use v3 for latest compatibility.
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
-          version: 10 # Or 'latest', or a specific version like '9'
-          run_install: false # We'll run install in a separate step for better caching
+          version: 10.29.3
 
       - name: Set Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
 
       - name: Install modules ${{ matrix.node-version }}
-        run: pnpm install --frozen-lockfile
+        run: corepack pnpm install --frozen-lockfile
       - name: Lint and test
         run: |
-          pnpm lint
-          pnpm test
+          corepack pnpm lint
+          corepack pnpm test

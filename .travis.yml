@@ -3,9 +3,13 @@ dist: xenial
 node_js:
   - 17
 cache:
-  npm: false
-script: npm exec -- run-p lint format test
+  directories:
+    - $HOME/.pnpm-store
+install:
+  - corepack enable
+  - corepack pnpm install --frozen-lockfile
+script: corepack pnpm exec run-p lint format test
 after_success:
-  - npm exec -- semantic-release
+  - corepack pnpm exec semantic-release
 notifications:
   email: false
