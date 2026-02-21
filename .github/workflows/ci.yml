@@ -27,7 +27,7 @@ jobs:
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
 
-      - name: Install dependencies (source of truth: pnpm-lock.yaml)
+      - name: Install dependencies (source of truth pnpm-lock.yaml)
         run: pnpm install --frozen-lockfile
 
       - name: Lint, test, and format check (npm runner)

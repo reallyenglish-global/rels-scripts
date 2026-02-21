@@ -9,11 +9,10 @@ const os = require('os')
 const path = require('path')
 
 const isTruthy = (value) => ['1', 'true', 'yes', 'on'].includes((value || '').toLowerCase())
-const skipHookSetup =
-  isTruthy(process.env.RELS_SCRIPTS_SKIP_DOWNLOAD) || isTruthy(process.env.RELS_SCRIPTS_SKIP_HOOKS)
+const skipHookSetup = isTruthy(process.env.RELS_SCRIPTS_SKIP_HOOKS)
 
 if (skipHookSetup) {
-  console.log('skip hooks setup because RELS_SCRIPTS_SKIP_DOWNLOAD/RELS_SCRIPTS_SKIP_HOOKS is set')
+  console.log('skip hooks setup because RELS_SCRIPTS_SKIP_HOOKS is set')
 } else {
   require('./hooks')
 }

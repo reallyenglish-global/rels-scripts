@@ -32,7 +32,7 @@ describe('toolchain smoke tests', () => {
     assert.ok(fs.existsSync(eslintBin), `eslint bin not found: ${eslintBin}`)
   })
 
-  it('skips hook setup when RELS_SCRIPTS_SKIP_DOWNLOAD is set', () => {
+  it('skips hook setup when RELS_SCRIPTS_SKIP_HOOKS is set', () => {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'rels-init-smoke-'))
     const packageJsonPath = path.join(tempDir, 'package.json')
 
@@ -47,7 +47,7 @@ describe('toolchain smoke tests', () => {
         env: {
           ...process.env,
           CI: 'false',
-          RELS_SCRIPTS_SKIP_DOWNLOAD: 'true',
+          RELS_SCRIPTS_SKIP_HOOKS: 'true',
         },
       })
 
@@ -55,7 +55,7 @@ describe('toolchain smoke tests', () => {
       assert.strictEqual(result.status, 0, output)
       assert.match(
         output,
-        /skip hooks setup because RELS_SCRIPTS_SKIP_DOWNLOAD\/RELS_SCRIPTS_SKIP_HOOKS is set/,
+        /skip hooks setup because RELS_SCRIPTS_SKIP_HOOKS is set/,
       )
       assert.strictEqual(fs.existsSync(path.join(tempDir, '.husky')), false)
       assert.strictEqual(fs.existsSync(path.join(tempDir, '.vscode', 'settings.json')), true)
