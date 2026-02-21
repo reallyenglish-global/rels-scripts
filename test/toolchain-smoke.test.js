@@ -53,10 +53,7 @@ describe('toolchain smoke tests', () => {
 
       const output = `${result.stdout || ''}${result.stderr || ''}`
       assert.strictEqual(result.status, 0, output)
-      assert.match(
-        output,
-        /skip hooks setup because RELS_SCRIPTS_SKIP_HOOKS is set/,
-      )
+      assert.match(output, /skip hooks setup because RELS_SCRIPTS_SKIP_HOOKS is set/)
       assert.strictEqual(fs.existsSync(path.join(tempDir, '.husky')), false)
       assert.strictEqual(fs.existsSync(path.join(tempDir, '.vscode', 'settings.json')), true)
     } finally {
