@@ -3,8 +3,8 @@
 
 const spawn = require('cross-spawn')
 const path = require('path')
-const { ownPath } = require('../config/paths')
 const fs = require('fs')
+const resolveBin = require('./utils/resolveBin')
 
 if (!fs.existsSync('.git')) {
   console.log('skip hooks because .git does not exist')
@@ -16,22 +16,11 @@ process.on('unhandledRejection', (e) => {
 })
 
 const huskyPath = path.join(process.cwd(), '.husky')
-const commitlintConfig = require.resolve(path.join(ownPath, 'config/commitlint.config.js'))
-const execCmd = 'corepack'
-const execArgs = ['pnpm', 'exec']
+const huskyBin = resolveBin('husky', 'husky')
 
-const pnpmCheck = spawn.sync(execCmd, ['pnpm', '--version'], { stdio: 'ignore', shell: true })
-if (pnpmCheck.status !== 0 || pnpmCheck.signal) {
-  console.error('pnpm is required to install hooks. Ensure corepack is available and rerun init.')
-  process.exit(1)
-}
-
-const huskyInstallCmd = ['husky', 'install', huskyPath]
-
-console.log('installing husky', execCmd, huskyInstallCmd)
-const installHusky = spawn.sync(execCmd, [...execArgs, ...huskyInstallCmd], {
+console.log('installing husky', huskyBin)
+const installHusky = spawn.sync(process.execPath, [huskyBin, 'install', huskyPath], {
   stdio: 'inherit',
-  shell: true,
 })
 
 if (installHusky.signal) {
@@ -44,29 +33,38 @@ if (installHusky.status !== 0 && process.env.CI !== 'true') {
 }
 
 const hooks = {
-  'pre-commit': ['export CI=true', `${execCmd} ${execArgs.join(' ')} run-p test lint format`],
-  'commit-msg': [
-    `${execCmd} ${execArgs.join(' ')} commitlint --config ${commitlintConfig} --edit $1`,
-  ],
+  'pre-commit': ['export CI=true', 'rels-scripts pre-commit'],
+  'commit-msg': ['rels-scripts commit-msg --edit "$1"'],
+}
+
+const legacyHookCommandPatterns = {
+  'pre-commit': [/^corepack pnpm exec run-p test lint format$/m],
+  'commit-msg': [/^corepack pnpm exec commitlint.*$/m],
 }
 
 Object.keys(hooks).forEach((hookName) => {
   const hookFile = `${huskyPath}/${hookName}`
 
+  if (fs.existsSync(hookFile) && legacyHookCommandPatterns[hookName]) {
+    let content = fs.readFileSync(hookFile, 'utf8')
+    legacyHookCommandPatterns[hookName].forEach((pattern) => {
+      content = content.replace(pattern, '').replace(/\n{3,}/g, '\n\n')
+    })
+    fs.writeFileSync(hookFile, content)
+  }
+
   const actions = hooks[hookName]
   actions.forEach((action) => {
     if (fs.existsSync(hookFile)) {
-      const grep = spawn.sync(`grep "${action}" ${hookFile}`, {
-        stdio: 'ignore',
-        shell: true,
-      })
-      if (grep.status === 0) {
+      const content = fs.readFileSync(hookFile, 'utf8')
+      if (content.includes(action)) {
         return
       }
     }
 
-    const command = `${execCmd} ${execArgs.join(' ')} husky add ${hookFile} '${action}'`
-    const childProcess = spawn.sync(command, { stdio: 'inherit', shell: true })
+    const childProcess = spawn.sync(process.execPath, [huskyBin, 'add', hookFile, action], {
+      stdio: 'inherit',
+    })
 
     if (childProcess.signal) {
       console.log('computer says no')

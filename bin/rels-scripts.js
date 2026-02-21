@@ -2,7 +2,7 @@
 'use strict'
 
 const spawn = require('cross-spawn')
-const SCRIPTS = ['test', 'format', 'lint', 'init', 'start', 'build']
+const SCRIPTS = ['test', 'format', 'lint', 'init', 'start', 'build', 'pre-commit', 'commit-msg']
 const args = process.argv.slice(2)
 
 const index = args.findIndex((arg) => SCRIPTS.includes(arg))
