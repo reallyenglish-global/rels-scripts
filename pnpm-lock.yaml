@@ -26,7 +26,7 @@ importers:
       '@babel/register':
         specifier: ^7.27.1
         version: 7.27.1(@babel/core@7.27.7)
-      '@babel/runtime-corejs3':
+      '@babel/runtime':
         specifier: ^7.27.6
         version: 7.27.6
       '@commitlint/cli':
@@ -65,9 +65,6 @@ importers:
       chalk:
         specifier: ^5.4.1
         version: 5.4.1
-      core-js:
-        specifier: ^3.43.0
-        version: 3.43.0
       cross-spawn:
         specifier: ^7.0.6
         version: 7.0.6
@@ -874,10 +871,6 @@ packages:
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
-
-  '@babel/runtime-corejs3@7.27.6':
-    resolution: {integrity: sha512-vDVrlmRAY8z9Ul/HxT+8ceAru95LQgkSKiXkSYZvqtbkPSfhZJgpRp45Cldbh1GJ1kxzQkI70AqyrTI58KpaWQ==}
-    engines: {node: '>=6.9.0'}
 
   '@babel/runtime@7.27.6':
     resolution: {integrity: sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==}
@@ -2162,12 +2155,6 @@ packages:
 
   core-js-compat@3.43.0:
     resolution: {integrity: sha512-2GML2ZsCc5LR7hZYz4AXmjQw8zuy2T//2QntwdnpuYI7jteT6GVYJL7F6C2C57R7gSYrcqVW3lAALefdbhBLDA==}
-
-  core-js-pure@3.43.0:
-    resolution: {integrity: sha512-i/AgxU2+A+BbJdMxh3v7/vxi2SbFqxiFmg6VsDwYB4jkucrd1BZNA9a9gphC0fYMG5IBSgQcbQnk865VCLe7xA==}
-
-  core-js@3.43.0:
-    resolution: {integrity: sha512-N6wEbTTZSYOY2rYAn85CuvWWkCK6QweMn7/4Nr3w+gDBeBhk/x4EJeY6FPo4QzDoJZxVTv8U7CMvgWk6pOHHqA==}
 
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
@@ -6836,10 +6823,6 @@ snapshots:
       pirates: 4.0.7
       source-map-support: 0.5.21
 
-  '@babel/runtime-corejs3@7.27.6':
-    dependencies:
-      core-js-pure: 3.43.0
-
   '@babel/runtime@7.27.6': {}
 
   '@babel/template@7.27.2':
@@ -8346,10 +8329,6 @@ snapshots:
   core-js-compat@3.43.0:
     dependencies:
       browserslist: 4.25.1
-
-  core-js-pure@3.43.0: {}
-
-  core-js@3.43.0: {}
 
   core-util-is@1.0.3: {}
 

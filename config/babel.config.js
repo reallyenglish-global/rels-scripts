@@ -1,13 +1,8 @@
 /*
  This babel.config is used by webpack as well as mocha and eslint configurations.
- Makes corejs optional: set USE_COREJS=false to disable.
 */
-const useCorejs = process.env.USE_COREJS !== 'false'
-
 const envPreset = {
-  useBuiltIns: useCorejs ? 'usage' : false,
   loose: true,
-  ...(useCorejs && { corejs: 3 }),
 }
 
 const config = {
@@ -39,4 +34,3 @@ require('@babel/register', '@babel/runtime')({
 })
 
 module.exports = config
-
