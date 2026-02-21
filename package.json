@@ -11,7 +11,7 @@
     "format": "node ./scripts/self-format.js",
     "format:check": "node ./scripts/self-format.js --check",
     "lint": "node ./scripts/self-lint.js",
-    "prepare": "rels-scripts init",
+    "prepare": "node ./scripts/init.js",
     "start": "rels-scripts start",
     "build": "rels-scripts build"
   },
