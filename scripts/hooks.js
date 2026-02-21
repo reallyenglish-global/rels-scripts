@@ -6,8 +6,13 @@ const path = require('path')
 const fs = require('fs')
 const resolveBin = require('./utils/resolveBin')
 
-if (!fs.existsSync('.git')) {
-  console.log('skip hooks because .git does not exist')
+const gitRepoCheck = spawn.sync('git', ['rev-parse', '--is-inside-work-tree'], {
+  encoding: 'utf8',
+  stdio: ['ignore', 'pipe', 'ignore'],
+})
+
+if (gitRepoCheck.status !== 0 || gitRepoCheck.stdout.trim() !== 'true') {
+  console.log('skip hooks because current directory is not a git worktree')
   process.exit(0)
 }
 

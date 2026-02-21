@@ -11,9 +11,10 @@ process.on('unhandledRejection', (e) => {
 const prettierBin = resolveBin('prettier', 'prettier')
 const config = require.resolve('../config/.prettierrc.yml')
 const ignore = require.resolve('../config/.prettierignore')
+const isCheckMode = process.argv.includes('--check')
 const args = [
   prettierBin,
-  '-w',
+  isCheckMode ? '--check' : '-w',
   '--config',
   config,
   '--ignore-path',

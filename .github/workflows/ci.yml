@@ -16,7 +16,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup pnpm
-        if: matrix.package-manager == 'pnpm'
         uses: pnpm/action-setup@v4
         with:
           version: 10.29.3
@@ -25,25 +24,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: ${{ matrix.package-manager }}
-          cache-dependency-path: ${{ matrix.package-manager == 'pnpm' && 'pnpm-lock.yaml' || 'package.json' }}
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
-      - name: Install dependencies (npm)
-        if: matrix.package-manager == 'npm'
-        run: npm install --no-audit --no-fund
-
-      - name: Install dependencies (pnpm)
-        if: matrix.package-manager == 'pnpm'
+      - name: Install dependencies (source of truth: pnpm-lock.yaml)
         run: pnpm install --frozen-lockfile
 
-      - name: Lint and test (npm)
+      - name: Lint, test, and format check (npm runner)
         if: matrix.package-manager == 'npm'
         run: |
           npm run lint
+          npm run format:check
           npm test
 
-      - name: Lint and test (pnpm)
+      - name: Lint, test, and format check (pnpm runner)
         if: matrix.package-manager == 'pnpm'
         run: |
           pnpm lint
+          pnpm format:check
           pnpm test
