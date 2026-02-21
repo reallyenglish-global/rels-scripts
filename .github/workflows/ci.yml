@@ -1,31 +1,49 @@
 name: CI
-on: [push]
+on:
+  push:
+  pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        node-version: [24.x]
+        node-version: [20.x, 22.x]
+        package-manager: [npm, pnpm]
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Setup pnpm
+        if: matrix.package-manager == 'pnpm'
         uses: pnpm/action-setup@v4
         with:
           version: 10.29.3
 
-      - name: Set Node.js ${{ matrix.node-version }}
+      - name: Set Node.js ${{ matrix.node-version }} with ${{ matrix.package-manager }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-          cache-dependency-path: pnpm-lock.yaml
+          cache: ${{ matrix.package-manager }}
+          cache-dependency-path: ${{ matrix.package-manager == 'pnpm' && 'pnpm-lock.yaml' || 'package.json' }}
 
-      - name: Install modules ${{ matrix.node-version }}
-        run: corepack pnpm install --frozen-lockfile
-      - name: Lint and test
+      - name: Install dependencies (npm)
+        if: matrix.package-manager == 'npm'
+        run: npm install --no-audit --no-fund
+
+      - name: Install dependencies (pnpm)
+        if: matrix.package-manager == 'pnpm'
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint and test (npm)
+        if: matrix.package-manager == 'npm'
         run: |
-          corepack pnpm lint
-          corepack pnpm test
+          npm run lint
+          npm test
+
+      - name: Lint and test (pnpm)
+        if: matrix.package-manager == 'pnpm'
+        run: |
+          pnpm lint
+          pnpm test

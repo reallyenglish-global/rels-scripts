@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "tool chain scripts for rels-xxx development",
   "main": "index.js",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0",
-    "format": "prettier -w --config ./config/.prettierrc.yml ./scripts/**/*.js",
-    "lint": "export BABEL_ENV=test && eslint --config ./config/.eslintrc.js ./scripts/**/*.js",
+    "test": "node ./scripts/self-test.js",
+    "format": "node ./scripts/self-format.js",
+    "lint": "node ./scripts/self-lint.js",
     "prepare": "rels-scripts init",
     "start": "rels-scripts start",
     "build": "rels-scripts build"
