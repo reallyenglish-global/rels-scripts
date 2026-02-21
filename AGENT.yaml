@@ -13,28 +13,27 @@ commands:
   setup:
     description: Install dependencies and link rels-scripts for local development.
     steps:
-      - run: pnpm install
+      - run: npm install
   lint:
     description: Run eslint with the shared config.
     steps:
-      - run: pnpm lint
+      - run: npm run lint
   format:
-    description: Run prettier on src/**/*.js|jsx|scss.
     steps:
-      - run: pnpm format
+      - run: npm run format
   test:
     description: Execute mocha using config/.mocharc.js (watch disabled in CI).
     steps:
-      - run: pnpm test
+      - run: npm test
   start:
     description: Launch webpack-dev-server with HTTPS enabled.
     steps:
-      - run: pnpm exec rels-scripts start
+      - run: npx rels-scripts start
   build:
     description: Produce an optimized build with semantic-release metadata injected.
     steps:
-      - run: pnpm exec rels-scripts build
+      - run: npx rels-scripts build
 notes:
-  - Always run `pnpm exec rels-scripts init` inside consuming apps to install husky and VS Code settings.
+  - Always run `npx rels-scripts init` (or `pnpm exec rels-scripts init`) inside consuming apps to install husky and VS Code settings.
   - `config/versioning.js` depends on git tags; make sure the repo has commit history available before running `start` or `build`.
-  - Default semantic-release execution is a dry run, so publishing new packages still requires manual version bumping and `pnpm publish`.
+  - Default semantic-release execution is a dry run, so publishing new packages still requires manual version bumping and `npm publish`/`pnpm publish`.

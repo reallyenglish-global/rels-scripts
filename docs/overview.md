@@ -1,6 +1,6 @@
 # rels-scripts Overview
 
-`rels-scripts` is a thin CLI wrapper that standardises how the rels-* family of React applications lint, test, format, and build code. It exposes a stable interface (`pnpm exec rels-scripts <task>`) that can be dropped into any project so teams avoid copying boilerplate from create-react-app and keep their tooling aligned.
+`rels-scripts` is a thin CLI wrapper that standardises how the rels-* family of React applications lint, test, format, and build code. It exposes a stable interface (`npx rels-scripts <task>` or `pnpm exec rels-scripts <task>`) that can be dropped into any project so teams avoid copying boilerplate from create-react-app and keep their tooling aligned.
 
 ## Key Directories
 - `bin/` – entry point (`bin/rels-scripts.js`) that proxies a task argument to the matching file under `scripts/`.
@@ -22,7 +22,7 @@
 - Runs a production webpack build, prints bundle stats (warning if gzipped bundles exceed 512/1024 KB), copies everything from `public` except `index.html`, and optionally writes `bundle-stats.json` when `--stats` is provided.
 
 ### test
-- Forces mocha into watch mode locally (`--watch` is skipped in CI), wires `config/.mocharc.js`, and spawns `pnpm exec mocha`.
+- Forces mocha into watch mode locally (`--watch` is skipped in CI), wires `config/.mocharc.js`, and spawns mocha from local dependencies.
 
 ### lint
 - Runs eslint with the shared config (`config/.eslintrc.js`) over `src/**/*.js(x)` while keeping `NODE_ENV=BABEL_ENV=development` for Babel parser compatibility.
@@ -36,13 +36,13 @@
 - `config/env.js` centralises dotenv loading and injects public `REACT_APP_*` variables.
 
 ## Automation Hooks
-- `scripts/hooks.js` installs husky with `pnpm exec` and wires two hooks: `pre-commit` (`run-p test lint format`) and `commit-msg` (commitlint with the bundled config).
+- `scripts/hooks.js` installs husky using the local husky binary and wires two hooks: `pre-commit` (`run-p test lint format`) and `commit-msg` (commitlint with the bundled config).
 - `scripts/vscode.js` keeps local VS Code settings in sync with the project-wide prettier/eslint versions to avoid editor drift.
 
 ## How to Consume the CLI
-1. Install dependencies in a consuming project: `pnpm add -D rels-scripts`.
-2. Run `pnpm exec rels-scripts init` to scaffold scripts, husky hooks, and VS Code settings.
-3. Call `pnpm lint|format|test|start|build` (or invoke the `rels-scripts` binary directly) to execute the shared tasks.
+1. Install dependencies in a consuming project: `npm i -D rels-scripts` (or `pnpm add -D rels-scripts`).
+2. Run `npx rels-scripts init` (or `pnpm exec rels-scripts init`) to scaffold scripts, husky hooks, and VS Code settings.
+3. Call `npm run lint|format|test|start|build` (or `pnpm lint|format|test|start|build`) to execute the shared tasks.
 
 ## Opportunities for Improvement
 - Add automated tests for `bin/rels-scripts.js` and the task wrappers so regressions in spawn arguments are caught early.

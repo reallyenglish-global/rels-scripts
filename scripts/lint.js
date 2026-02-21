@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const spawn = require('cross-spawn')
+const resolveBin = require('./utils/resolveBin')
 
 process.env.BABEL_ENV = 'development'
 process.env.NODE_ENV = 'development'
@@ -9,16 +10,15 @@ process.on('unhandledRejection', (e) => {
   throw e
 })
 const config = require.resolve('../config/.eslintrc.js')
+const eslintBin = resolveBin('eslint', 'eslint')
 
 const args = process.argv.slice(2)
 
-args.push(`--config ${config}`)
-args.push('--ext .js,.jsx')
+args.push('--config', config)
+args.push('--ext', '.js,.jsx')
 args.push('src/')
-args.unshift('corepack pnpm exec eslint')
-const childProcess = spawn.sync(args.join(' '), {
+const childProcess = spawn.sync(process.execPath, [eslintBin, ...args], {
   stdio: 'inherit',
-  shell: true,
 })
 
 if (childProcess.signal) {

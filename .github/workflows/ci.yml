@@ -1,12 +1,16 @@
 name: CI
-on: [push]
+on:
+  push:
+  pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        node-version: [24.x]
+        node-version: [20.x, 22.x]
+        package-manager: [npm, pnpm]
 
     steps:
       - uses: actions/checkout@v4
@@ -16,16 +20,26 @@ jobs:
         with:
           version: 10.29.3
 
-      - name: Set Node.js ${{ matrix.node-version }}
+      - name: Set Node.js ${{ matrix.node-version }} with ${{ matrix.package-manager }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+          cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
 
-      - name: Install modules ${{ matrix.node-version }}
-        run: corepack pnpm install --frozen-lockfile
-      - name: Lint and test
+      - name: Install dependencies (source of truth pnpm-lock.yaml)
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint, test, and format check (npm runner)
+        if: matrix.package-manager == 'npm'
         run: |
-          corepack pnpm lint
-          corepack pnpm test
+          npm run lint
+          npm run format:check
+          npm test
+
+      - name: Lint, test, and format check (pnpm runner)
+        if: matrix.package-manager == 'pnpm'
+        run: |
+          pnpm lint
+          pnpm format:check
+          pnpm test
