@@ -11,6 +11,7 @@ const host = process.env.HOST || '0.0.0.0'
 const sockHost = process.env.WDS_SOCKET_HOST
 const sockPath = process.env.WDS_SOCKET_PATH // default: '/ws'
 const sockPort = process.env.WDS_SOCKET_PORT
+const useHmr = process.env.RELS_HMR === 'true'
 const { publicUrlOrPath, appPublic, appSrc, proxySetup } = require('./paths')
 
 const sources = [
@@ -75,6 +76,8 @@ module.exports = function (proxy, allowedHost) {
       'Access-Control-Allow-Headers': '*',
     },
     compress: true,
+    hot: useHmr,
+    liveReload: !useHmr,
     static: sources,
     client: {
       webSocketURL: {
