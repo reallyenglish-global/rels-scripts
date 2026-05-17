@@ -4,6 +4,7 @@
 
 /coverage
 /build
+.test-failures.json
 
 .DS_Store
 .history
