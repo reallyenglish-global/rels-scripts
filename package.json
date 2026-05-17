@@ -8,15 +8,15 @@
   },
   "scripts": {
     "test": "node ./scripts/self-test.js",
-    "test:file": "node ./scripts/test-file.js",
-    "test:case": "node ./scripts/test-case.js",
-    "test:failed": "node ./scripts/test-failed.js",
     "format": "node ./scripts/self-format.js",
-    "format:check": "node ./scripts/self-format.js --check",
     "lint": "node ./scripts/self-lint.js",
     "prepare": "node ./scripts/init.js",
     "start": "rels-scripts start",
-    "build": "rels-scripts build"
+    "build": "rels-scripts build",
+    "test:file": "node ./scripts/test-file.js",
+    "test:case": "node ./scripts/test-case.js",
+    "test:failed": "node ./scripts/test-failed.js",
+    "format:check": "node ./scripts/self-format.js --check"
   },
   "bin": {
     "rels-scripts": "./bin/rels-scripts.js"
