@@ -71,6 +71,66 @@ RELS_HMR=true rels-scripts start
 This exists because some consumers were loading the webpack dev client with HMR effectively
 disabled, which created browser console noise without any real development benefit.
 
+## Bundler Selection
+
+`rels-scripts` supports both **webpack** (default) and **Vite** as bundlers.
+
+### Using webpack (default)
+
+```bash
+npm start
+npm run build
+```
+
+### Using Vite
+
+```bash
+BUNDLER=vite npm start
+BUNDLER=vite npm run build
+```
+
+### Making Vite the default
+
+Add to your project's `.env` file:
+
+```
+BUNDLER=vite
+```
+
+Or set in your `package.json` scripts:
+
+```json
+{
+  "scripts": {
+    "start": "BUNDLER=vite rels-scripts start",
+    "build": "BUNDLER=vite rels-scripts build"
+  }
+}
+```
+
+### Vite-specific features
+
+- Faster cold start in development (2-3x improvement)
+- Faster HMR when `RELS_HMR=true` (5-10x improvement)
+- Native ESM support
+- Better tree-shaking in production
+
+### Webpack vs Vite compatibility
+
+Both bundlers support:
+- HTTPS dev server
+- Environment variables from `.env` files (RELS_* prefix)
+- SVG as React components
+- CSS/SCSS modules
+- Public folder serving
+- Service workers (optional)
+- Semantic versioning integration
+- Handlebars templates
+- rels-assets serving
+- Proxy support
+
+For migration guidance and troubleshooting, see [docs/VITE_MIGRATION.md](docs/VITE_MIGRATION.md).
+
 ## Local verification
 
 Run the rels-scripts smoke tests:
