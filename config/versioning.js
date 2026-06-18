@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 
-const semanticRelease = require('semantic-release')
+const semanticReleaseModule = require('semantic-release')
 const spawn = require('cross-spawn')
 const paths = require('./paths')
+
+const semanticRelease = semanticReleaseModule.default || semanticReleaseModule
 
 const getBranchName = () => {
   const gitBranch = spawn.sync('git', ['branch', '--show-current'], {
