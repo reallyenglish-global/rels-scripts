@@ -41,6 +41,11 @@ let config
 const { checkBrowsers } = require('react-dev-utils/browsersHelper')
 
 versioning()
+  // versioning() is defensive internally; this keeps a surprise rejection from
+  // reaching the unhandledRejection handler above and failing the build.
+  .catch((error) => {
+    console.log(chalk.yellow(`rels-scripts: version stamping skipped (${error.message})`))
+  })
   .then(() => {
     config = configFactory('production')
     checkBrowsers(paths.appPath, isInteractive)
