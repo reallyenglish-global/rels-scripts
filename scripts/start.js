@@ -1,7 +1,7 @@
 'use strict'
 
-// Router script - delegates to webpack or vite based on BUNDLER env var
-const bundler = process.env.BUNDLER || 'webpack'
+// Router script - delegates to Vite by default; webpack remains an explicit fallback.
+const bundler = process.env.BUNDLER || 'vite'
 
 if (bundler === 'vite') {
   console.log('Starting with Vite bundler...\n')

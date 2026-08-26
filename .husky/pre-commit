@@ -2,4 +2,4 @@
 . "$(dirname "$0")/_/husky.sh"
 
 export CI=true
-rels-scripts pre-commit
+node "$(git rev-parse --show-toplevel)/scripts/pre-commit.js"
