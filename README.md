@@ -12,8 +12,8 @@ behavior used by projects such as `rels-lib` and `rels-web`.
 
 ## What it provides
 
-- `rels-scripts start`
-  - webpack development server
+- `rels-scripts start`, `rels-scripts dev`, or `rels-scripts serve`
+  - Vite development server by default
 - `rels-scripts build`
   - production build pipeline
 - `rels-scripts test`
@@ -73,40 +73,24 @@ disabled, which created browser console noise without any real development benef
 
 ## Bundler Selection
 
-`rels-scripts` supports both **webpack** (default) and **Vite** as bundlers.
+`rels-scripts` supports both **Vite** (default) and **webpack** as a compatibility bundler.
 
-### Using webpack (default)
+### Using Vite (default)
 
 ```bash
-npm start
+npm run dev
 npm run build
 ```
 
-### Using Vite
+### Using webpack compatibility mode
 
 ```bash
-BUNDLER=vite npm start
-BUNDLER=vite npm run build
+BUNDLER=webpack npm start
+BUNDLER=webpack npm run build
 ```
 
-### Making Vite the default
-
-Add to your project's `.env` file:
-
-```
-BUNDLER=vite
-```
-
-Or set in your `package.json` scripts:
-
-```json
-{
-  "scripts": {
-    "start": "BUNDLER=vite rels-scripts start",
-    "build": "BUNDLER=vite rels-scripts build"
-  }
-}
-```
+Vite is now the default. Existing consumers can force webpack temporarily with
+`BUNDLER=webpack` while they complete migration.
 
 ### Vite-specific features
 

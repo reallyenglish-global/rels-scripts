@@ -1,5 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-/Users/randy/re-global/rels-scripts/node_modules/@commitlint/cli/cli.js --config /Users/randy/re-global/rels-scripts/config/commitlint.config.js --edit $1
-rels-scripts commit-msg --edit "$1"
+node "$(git rev-parse --show-toplevel)/scripts/commit-msg.js" --edit "$1"

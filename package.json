@@ -13,6 +13,8 @@
     "prepare": "node ./scripts/init.js",
     "start": "rels-scripts start",
     "build": "rels-scripts build",
+    "dev": "rels-scripts dev",
+    "serve": "rels-scripts serve",
     "format:check": "node ./scripts/self-format.js --check"
   },
   "bin": {

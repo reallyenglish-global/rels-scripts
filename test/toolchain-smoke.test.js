@@ -26,6 +26,45 @@ describe('toolchain smoke tests', () => {
     assert.match(result.stdout, /rels-scripts does not support 'does-not-exist'/)
   })
 
+  it('recognizes modern development and formatting tasks', () => {
+    const source = fs.readFileSync(cliPath, 'utf8')
+
+    assert.match(source, /'dev'/)
+    assert.match(source, /'serve'/)
+    assert.match(source, /'format:check'/)
+  })
+
+  it('defaults build and start routing to Vite', () => {
+    const buildSource = fs.readFileSync(path.join(repoRoot, 'scripts', 'build.js'), 'utf8')
+    const startSource = fs.readFileSync(path.join(repoRoot, 'scripts', 'start.js'), 'utf8')
+
+    assert.match(buildSource, /process\.env\.BUNDLER \|\| 'vite'/)
+    assert.match(startSource, /process\.env\.BUNDLER \|\| 'vite'/)
+  })
+
+  it('routes dev and serve aliases through the bundler dispatcher', () => {
+    for (const task of ['dev', 'serve']) {
+      const result = runNode(cliPath, [task], {
+        env: { ...process.env, BUNDLER: 'unsupported-test-bundler' },
+      })
+
+      assert.strictEqual(result.status, 1)
+      assert.match(result.stderr, /Unknown bundler: unsupported-test-bundler/)
+    }
+  })
+
+  it('keeps committed hooks portable', () => {
+    const preCommit = fs.readFileSync(path.join(repoRoot, '.husky', 'pre-commit'), 'utf8')
+    const commitMsg = fs.readFileSync(path.join(repoRoot, '.husky', 'commit-msg'), 'utf8')
+
+    assert.doesNotMatch(
+      `${preCommit}\n${commitMsg}`,
+      /\/Users\/|rels-scripts pre-commit|rels-scripts commit-msg/,
+    )
+    assert.match(preCommit, /scripts\/pre-commit\.js/)
+    assert.match(commitMsg, /scripts\/commit-msg\.js/)
+  })
+
   it('resolves local eslint binary path', () => {
     const eslintBin = resolveBin('eslint', 'eslint')
 
