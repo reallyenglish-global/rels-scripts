@@ -60,6 +60,15 @@ function runVersioning(dir, env = {}) {
   delete baseEnv.TRAVIS_BRANCH
   delete baseEnv.GITHUB_REF_NAME
   delete baseEnv.RELS_BRANCH
+  // git hooks (this suite runs under husky's pre-commit) set these so the
+  // hook process resolves the real repo. Without stripping them, versioning()
+  // and any git commands the temp app runs would target this checkout's
+  // .git instead of the throwaway app directory.
+  delete baseEnv.GIT_DIR
+  delete baseEnv.GIT_WORK_TREE
+  delete baseEnv.GIT_INDEX_FILE
+  delete baseEnv.GIT_COMMON_DIR
+  delete baseEnv.GIT_PREFIX
 
   const result = spawn.sync(process.execPath, [harness], {
     cwd: dir,
@@ -82,7 +91,17 @@ function runVersioning(dir, env = {}) {
 }
 
 function git(dir, args) {
-  return spawn.sync('git', args, { cwd: dir, encoding: 'utf8' })
+  // Same reasoning as runVersioning(): strip the repo-identifying env vars a
+  // git hook sets so these commands operate on the throwaway `dir`, not on
+  // whatever repository invoked this test suite.
+  const env = { ...process.env }
+  delete env.GIT_DIR
+  delete env.GIT_WORK_TREE
+  delete env.GIT_INDEX_FILE
+  delete env.GIT_COMMON_DIR
+  delete env.GIT_PREFIX
+
+  return spawn.sync('git', args, { cwd: dir, encoding: 'utf8', env })
 }
 
 describe('config/versioning', () => {
