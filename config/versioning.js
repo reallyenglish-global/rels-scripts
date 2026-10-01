@@ -66,7 +66,18 @@ const semanticReleaseVersion = async (branch) => {
     const result = await semanticRelease({
       branches: [branch],
       tagFormat: 'v${version}', // eslint-disable-line no-template-curly-in-string
-      plugins: ['@semantic-release/commit-analyzer'],
+      plugins: [
+        [
+          '@semantic-release/commit-analyzer',
+          {
+            releaseRules: [
+              { type: 'feat', release: 'minor' },
+              { type: 'fix', release: 'patch' },
+              { type: 'chore', release: 'patch' },
+            ],
+          },
+        ],
+      ],
       dryRun: true,
       cwd: process.cwd(),
     })
