@@ -131,6 +131,21 @@ npm run lint
 npm run format
 ```
 
+## Releasing
+
+Consumers install rels-scripts from git tags (`#vX.Y.Z`). Keep `package.json`
+`version` equal to the tag:
+
+1. Set `"version": "X.Y.Z"` in `package.json` in the release commit.
+2. Tag that commit `vX.Y.Z` and push the tag.
+
+CI fails a pushed `v*` tag whose name does not match `package.json`.
+
+This matters for consumers. Several rels-\* packages depend on rels-scripts at
+different tags, and pnpm's hoisted linker (`node-linker=hoisted`) treats copies
+with the same `name@version` as one package. While every tag said `1.0.0`, a
+consumer could silently run an older rels-scripts than the tag it pinned.
+
 ## Notes for consumers
 
 - Git-hosted consumers should avoid relying on package-level `prepare` scripts for heavyweight setup.
